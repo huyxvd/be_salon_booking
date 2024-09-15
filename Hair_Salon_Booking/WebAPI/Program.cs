@@ -4,21 +4,17 @@ using Application.Commons;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// parse the configuration in appsettings
+// Parse the configuration in appsettings
 var configuration = builder.Configuration.Get<AppConfiguration>();
 builder.Services.AddInfrastructuresService(configuration.DatabaseConnection);
 builder.Services.AddWebAPIService();
-builder.Services.AddSingleton(configuration);
 
-/*
-    register with singleton life time
-    now we can use dependency injection for AppConfiguration
-*/
+// Register AppConfiguration as a singleton for DI
 builder.Services.AddSingleton(configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -26,14 +22,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapHealthChecks("/healthchecks");
-app.UseHttpsRedirection();
-// todo authentication
-app.UseAuthorization();
+app.UseHttpsRedirection();  // Redirect HTTP to HTTPS
+app.UseAuthorization();     // Add Authorization Middleware
 
 app.MapControllers();
 
 app.Run();
-
-// this line tell intergrasion test
-// https://stackoverflow.com/questions/69991983/deps-file-missing-for-dotnet-6-integration-tests
-public partial class Program { }

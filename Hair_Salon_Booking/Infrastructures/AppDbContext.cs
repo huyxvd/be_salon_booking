@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructures;
 public class AppDbContext : DbContext
@@ -9,5 +10,6 @@ public class AppDbContext : DbContext
     }
 
     #region DbSet
+    public DbSet<User> Users { get; set; }
     #endregion
 }
