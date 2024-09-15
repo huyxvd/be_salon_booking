@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories;
 using Infrastructures.Repositories;
+using Infrastructures.Mappers;
 
 namespace Infrastructures;
 public static class DenpendencyInjection
@@ -22,7 +23,7 @@ public static class DenpendencyInjection
         // this configuration just use in-memory for fast develop
         //services.AddDbContext<AppDbContext>(option => option.UseInMemoryDatabase("test"));
 
-        services.AddAutoMapper(typeof(Infrastructures.Mappers.MapperConfigurationsProfile).Assembly);
+        services.AddAutoMapper(typeof(MapperConfigurationsProfile).Assembly);
 
         return services;
     }
